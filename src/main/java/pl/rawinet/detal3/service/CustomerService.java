@@ -1,5 +1,6 @@
 package pl.rawinet.detal3.service;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import pl.rawinet.detal3.model.Customer;
 import pl.rawinet.detal3.repository.CustomerRepository;
@@ -11,6 +12,7 @@ import java.util.Optional;
 public class CustomerService {
     private final CustomerRepository customerRepo;
 
+    @Autowired
     public CustomerService(CustomerRepository repository){
         this.customerRepo = repository;
     }

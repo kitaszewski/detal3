@@ -1,6 +1,8 @@
 package pl.rawinet.detal3.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import pl.rawinet.detal3.model.Customer;
 import pl.rawinet.detal3.service.CustomerService;
@@ -10,9 +12,11 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/customers")
+@CrossOrigin
 public class CustomerAPI {
     private final CustomerService customerService;
 
+    @Autowired
     public CustomerAPI(CustomerService customerService) {
         this.customerService = customerService;
     }
@@ -45,6 +49,7 @@ public class CustomerAPI {
     }
 
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity delete(@PathVariable Long id){
         if(!customerService.findById(id).isPresent()){
             return ResponseEntity.badRequest().header("API-Error", "Klient nie istnieje").build();
